@@ -21,3 +21,31 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 19
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.2'
+
+    // App dependencies
+    supportLibraryVersion = '25.1.0'
+
+    junitVersion = '4.12'
+    mockitoVersion = '2.+'
+    espressoVersion = '2.2.2'
+
+    picassoVersion = '2.5.2'
+
+    gsonVersion = '2.7'
+    gsonConverterVersion = '2.0.0'
+
+    retrofitVersion = '2.1.0'
+    okHttpLoggingVersion = '3.3.1'
+
+    butterknifeVersion = '8.4.0'
+    glashfishAnnotVersion = '10.0-b28'
+}
