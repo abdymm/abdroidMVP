@@ -1,2 +1,5 @@
-# abdroid-mvp
-android MVP architecture
+# Android MVP Sample Project
+
+Sample project with MVP Pattern
+
+## Architectural
