@@ -8,6 +8,17 @@ Sample project with MVP Pattern
 - Retrofit 2.0
 - Butterknife
 - Realm
+```
+ *Keep in mind that adding Realm adds about 3MB to your APK, because the native libs which are used by Realm have to be included for multiple CPU architectures. However, you can reduce this overhead by using APK Splits.*
+```
+- Parceler
+
+
+---
+Next
+- Dagger
+- Rx
+- TDD
 
 ## Architectural
 

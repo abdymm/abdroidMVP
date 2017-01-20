@@ -1,14 +1,21 @@
-package com.abdymalikmulky.abdroidmvp.app.news.data;
+package com.abdymalikmulky.abdroidmvp.app.data;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by abdymalikmulky on 1/17/17.
  */
 
-public class News {
+public class News extends RealmObject {
+    @PrimaryKey
     int id;
     String title;
     String summary;
     String date;
+
+    public News() {
+    }
 
     public News(int id, String title, String summary, String date) {
         this.id = id;

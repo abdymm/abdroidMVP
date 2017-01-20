@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdymalikmulky.abdroidmvp.R;
-import com.abdymalikmulky.abdroidmvp.app.news.data.News;
+import com.abdymalikmulky.abdroidmvp.app.data.News;
 import com.abdymalikmulky.abdroidmvp.util.LoadingUiUtils;
 
 import java.util.List;

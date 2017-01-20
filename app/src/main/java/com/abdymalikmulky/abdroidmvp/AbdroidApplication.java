@@ -3,6 +3,8 @@ package com.abdymalikmulky.abdroidmvp;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import io.realm.Realm;
+
 /**
  * Created by abdymalikmulky on 1/17/17.
  */
@@ -14,7 +16,10 @@ public class AbdroidApplication extends Application{
     public void onCreate() {
         super.onCreate();
         // Required initialization logic here!
+        Realm.init(this);
+
     }
+
 
     // Called by the system when the device configuration changes while your component is running.
     // Overriding this method is totally optional!

@@ -2,7 +2,7 @@ package com.abdymalikmulky.abdroidmvp.app.news;
 
 import com.abdymalikmulky.abdroidmvp.app.BasePresenter;
 import com.abdymalikmulky.abdroidmvp.app.BaseView;
-import com.abdymalikmulky.abdroidmvp.app.news.data.News;
+import com.abdymalikmulky.abdroidmvp.app.data.News;
 
 import java.util.List;
 
