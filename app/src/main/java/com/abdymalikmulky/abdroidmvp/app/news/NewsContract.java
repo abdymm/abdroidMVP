@@ -17,6 +17,8 @@ public class NewsContract {
 
         void showNews(List<News> news);
 
+        void showNoNews();
+
         void showNewsDetail(int newsId);
 
     }

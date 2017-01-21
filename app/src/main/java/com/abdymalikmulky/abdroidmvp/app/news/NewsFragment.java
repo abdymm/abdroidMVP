@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.abdymalikmulky.abdroidmvp.R;
 import com.abdymalikmulky.abdroidmvp.app.data.News;
@@ -91,10 +90,18 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
     @Override
     public void showNews(List<News> news) {
-        Toast.makeText(getActivity().getApplicationContext(), news.toString(), Toast.LENGTH_SHORT).show();
+        showLoading(false);
+
         for (News newsData : news) {
             data.append(newsData.getTitle()+" "+newsData.getSummary()+" "+newsData.getDate()+"\n");
         }
+    }
+
+    @Override
+    public void showNoNews() {
+        showLoading(false);
+        data.setText(R.string.msg_nonews);
+
     }
 
     @Override

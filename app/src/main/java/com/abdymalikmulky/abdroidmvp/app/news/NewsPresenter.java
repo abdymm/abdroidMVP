@@ -8,6 +8,7 @@ import com.abdymalikmulky.abdroidmvp.app.data.NewsLocal;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
@@ -22,6 +23,13 @@ public class NewsPresenter implements NewsContract.Presenter{
     NewsContract.View mNewsView;
     NewsLocal newsLocal;
 
+    //sementara
+    private final static ArrayList<News> NEWS_DATA_MOCK;
+    static {
+        NEWS_DATA_MOCK = new ArrayList<>();
+        NEWS_DATA_MOCK.add(new News(1,"Walikota Jateng","Ground looks good, work required no foundation work required ","12 Januari 2017"));
+        NEWS_DATA_MOCK.add(new News(2,"Gubernur Kendari","Found awesome girders at half the cost! Found awesome ","20 Februari 2017"));
+    }
 
     public NewsPresenter(@NotNull NewsContract.View newsView) {
         newsLocal = new NewsLocal();
@@ -31,7 +39,9 @@ public class NewsPresenter implements NewsContract.Presenter{
 
     @Override
     public void loadNews() {
-        mNewsView.showLoading(true);
+        for (News newsData:NEWS_DATA_MOCK) {
+            newsLocal.save(newsData);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
@@ -39,17 +49,15 @@ public class NewsPresenter implements NewsContract.Presenter{
                     @Override
                     public void onNewsLoaded(List<News> news) {
                         mNewsView.showNews(news);
-                        mNewsView.showLoading(false);
                     }
-
                     @Override
                     public void onDataNotAvailable() {
-
+                        mNewsView.showNoNews();
                     }
                 });
 
             }
-        }, 2000);
+        }, 100);
     }
 
     @Override
