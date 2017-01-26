@@ -29,6 +29,7 @@ public class NewsPresenter implements NewsContract.Presenter{
         NEWS_DATA_MOCK = new ArrayList<>();
         NEWS_DATA_MOCK.add(new News(1,"Walikota Jateng","Ground looks good, work required no foundation work required ","12 Januari 2017"));
         NEWS_DATA_MOCK.add(new News(2,"Gubernur Kendari","Found awesome girders at half the cost! Found awesome ","20 Februari 2017"));
+        NEWS_DATA_MOCK.add(new News(3,"Berita Bandung","Found awesome girders at work required no foundation work required ","23 Februari 2017"));
     }
 
     public NewsPresenter(@NotNull NewsContract.View newsView) {
@@ -57,7 +58,7 @@ public class NewsPresenter implements NewsContract.Presenter{
                 });
 
             }
-        }, 100);
+        }, 1000);
     }
 
     @Override

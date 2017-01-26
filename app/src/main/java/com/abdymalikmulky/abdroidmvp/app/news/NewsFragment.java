@@ -4,11 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abdymalikmulky.abdroidmvp.R;
 import com.abdymalikmulky.abdroidmvp.app.data.News;
@@ -32,8 +35,13 @@ public class NewsFragment extends Fragment implements NewsContract.View{
     //component
     @BindView(R.id.news_loading)
     ProgressBar loading;
-    @BindView(R.id.news_data)
-    TextView data;
+    @BindView(R.id.news_loading_text)
+    TextView loadingText;
+    //List
+    @BindView(R.id.news_list)
+    RecyclerView newsList;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public NewsFragment() {
     }
@@ -58,10 +66,16 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, view);
 
-        return view;
+        setUpRV(newsList);
 
+        return view;
     }
 
+    private void setUpRV(RecyclerView rv){
+        rv.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(mLayoutManager);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -85,23 +99,22 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
     @Override
     public void showLoading(boolean show) {
-        LoadingUiUtils.hideShowLoading(loading,show);
+        LoadingUiUtils.hideShowLoading(loading,loadingText,show);
     }
 
     @Override
     public void showNews(List<News> news) {
         showLoading(false);
 
-        for (News newsData : news) {
-            data.append(newsData.getTitle()+" "+newsData.getSummary()+" "+newsData.getDate()+"\n");
-        }
+        //show in list
+        mAdapter = new NewsAdapter(news);
+        newsList.setAdapter(mAdapter);
     }
 
     @Override
     public void showNoNews() {
         showLoading(false);
-        data.setText(R.string.msg_nonews);
-
+        Toast.makeText(getActivity(), "No Berita", Toast.LENGTH_SHORT).show();
     }
 
     @Override

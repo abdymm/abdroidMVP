@@ -14,9 +14,22 @@
         android:id="@+id/news_loading" />
 
     <TextView
-        android:id="@+id/news_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="@string/loading_text"
+        android:id="@+id/news_loading_text"
+        android:gravity="center"
+        android:layout_below="@+id/news_loading"
+        android:layout_alignParentStart="true" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/news_list"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>
