@@ -1,4 +1,6 @@
-package com.abdymalikmulky.abdroidmvp.app.data;
+package com.abdymalikmulky.abdroidmvp.app.data.news;
+
+import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 
 import java.util.List;
 
@@ -10,20 +12,20 @@ public interface NewsDataSource {
 
     //OnAction Callback
     interface LoadNewsCallback {
-        void onNewsLoaded(List<News> news);
+        void onNewsLoaded(List<Berita> news);
         void onDataNotAvailable();
     }
     interface GetNewsCallback {
-        void onNewsLoaded(News news);
+        void onNewsLoaded(Berita news);
         void onDataNotAvailable();
     }
 
 
     void load(LoadNewsCallback callback);
 
-    void get(News news,GetNewsCallback callback);
+    void get(Berita news,GetNewsCallback callback);
 
-    void save(News news);
+    void save(Berita news);
 
-    void delete(News news);
+    void delete(Berita news);
 }

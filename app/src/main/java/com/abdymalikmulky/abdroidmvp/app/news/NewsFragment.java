@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdymalikmulky.abdroidmvp.R;
-import com.abdymalikmulky.abdroidmvp.app.data.News;
+import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 import com.abdymalikmulky.abdroidmvp.util.LoadingUiUtils;
 
 import java.util.List;
@@ -103,7 +103,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
     }
 
     @Override
-    public void showNews(List<News> news) {
+    public void showNews(List<Berita> news) {
         showLoading(false);
 
         //show in list

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 import io.realm.Realm;
+import timber.log.Timber;
 
 /**
  * Created by abdymalikmulky on 1/17/17.
@@ -17,6 +18,11 @@ public class AbdroidApplication extends Application{
         super.onCreate();
         // Required initialization logic here!
         Realm.init(this);
+
+        //Timber initialize tree
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
 
     }
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.abdymalikmulky.abdroidmvp.R;
-import com.abdymalikmulky.abdroidmvp.app.data.News;
+import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    List<News> mNews;
+    List<Berita> mNews;
 
 
-    public NewsAdapter(List<News> news) {
+    public NewsAdapter(List<Berita> news) {
         mNews = news;
     }
 
@@ -50,10 +50,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        News news = mNews.get(position);
-        holder.title.setText(news.getTitle());
-        holder.sum.setText(news.getSummary());
-        holder.date.setText(news.getDate());
+        Berita news = mNews.get(position);
+        holder.title.setText(news.getJudul());
+        holder.sum.setText(news.getIkhtisar());
+        holder.date.setText(news.getTanggal());
     }
 
     @Override

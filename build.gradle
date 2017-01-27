@@ -50,4 +50,6 @@ ext {
     glashfishAnnotVersion = '10.0-b28'
 
     realmVersion = '2.2.2'
+
+    timberVersion = '4.5.1'
 }

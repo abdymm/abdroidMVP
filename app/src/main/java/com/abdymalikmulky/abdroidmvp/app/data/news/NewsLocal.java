@@ -1,6 +1,8 @@
-package com.abdymalikmulky.abdroidmvp.app.data;
+package com.abdymalikmulky.abdroidmvp.app.data.news;
 
 import android.util.Log;
+
+import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -20,7 +22,7 @@ public class NewsLocal implements NewsDataSource{
 
     @Override
     public void load(LoadNewsCallback callback) {
-        RealmResults<News> news = realm.where(News.class).findAll();
+        RealmResults<Berita> news = realm.where(Berita.class).findAll();
         if(!news.isEmpty()){
             callback.onNewsLoaded(news);
         }else {
@@ -29,8 +31,8 @@ public class NewsLocal implements NewsDataSource{
     }
 
     @Override
-    public void get(News newsParam, GetNewsCallback callback) {
-        News news = realm.where(News.class).equalTo("id",newsParam.getId()).findFirst();
+    public void get(Berita newsParam, GetNewsCallback callback) {
+        Berita news = realm.where(Berita.class).equalTo("detailUrl",newsParam.getDetailUrl()).findFirst();
         if(news!=null){
             callback.onNewsLoaded(news);
         }else {
@@ -39,7 +41,7 @@ public class NewsLocal implements NewsDataSource{
     }
 
     @Override
-    public void save(final News news) {
+    public void save(final Berita news) {
         // Asynchronously update objects on a background thread
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -61,8 +63,8 @@ public class NewsLocal implements NewsDataSource{
     }
 
     @Override
-    public void delete(final News newsParam) {
-        final News news = realm.where(News.class).equalTo("id",newsParam.getId()).findFirst();
+    public void delete(final Berita newsParam) {
+        final Berita news = realm.where(Berita.class).equalTo("detailUrl",newsParam.getDetailUrl()).findFirst();
 
         // Asynchronously update objects on a background thread
         realm.executeTransactionAsync(new Realm.Transaction() {

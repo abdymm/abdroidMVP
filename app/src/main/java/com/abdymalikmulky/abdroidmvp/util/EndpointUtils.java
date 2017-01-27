@@ -10,8 +10,8 @@ public class EndpointUtils {
     public static final String BASE_URL = "http://api.abdymalikmulky.com/v1/kendari-berita/";
 
     //LIST BERITA
-    public static final String ENDPOINT_LIST = BASE_URL+"index/";
-    public static final String ENDPOINT_DETAIL = BASE_URL+"detail/?id=";
+    public static final String ENDPOINT_LIST = "index/";
+    public static final String ENDPOINT_DETAIL = "detail/?id={slug}";
 
 
 }
