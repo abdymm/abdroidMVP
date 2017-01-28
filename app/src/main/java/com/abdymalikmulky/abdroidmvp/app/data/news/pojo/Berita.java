@@ -8,6 +8,9 @@ import io.realm.RealmObject;
 
 public class Berita extends RealmObject {
 
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("judul")
     @Expose
     private String judul;
@@ -29,6 +32,14 @@ public class Berita extends RealmObject {
     @SerializedName("tanggal")
     @Expose
     private String tanggal;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getJudul() {
         return judul;
@@ -86,10 +97,12 @@ public class Berita extends RealmObject {
         this.tanggal = tanggal;
     }
 
+
     @Override
     public String toString() {
         return "Berita{" +
-                "judul='" + judul + '\'' +
+                "id='" + id + '\'' +
+                ", judul='" + judul + '\'' +
                 ", ikhtisar='" + ikhtisar + '\'' +
                 ", gambar='" + gambar + '\'' +
                 ", gambarThumb='" + gambarThumb + '\'' +

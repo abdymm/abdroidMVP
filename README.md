@@ -5,7 +5,8 @@ Sample project with MVP Pattern
 ##Apa ini
 
 ##Library
-- Retrofit 2.0
+- Retrofit 2.0 with data caching
+- Picasso
 - Butterknife
 - Realm
 ```

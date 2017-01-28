@@ -32,7 +32,7 @@ public class NewsLocal implements NewsDataSource{
 
     @Override
     public void get(Berita newsParam, GetNewsCallback callback) {
-        Berita news = realm.where(Berita.class).equalTo("detailUrl",newsParam.getDetailUrl()).findFirst();
+        Berita news = realm.where(Berita.class).equalTo("id",newsParam.getId()).findFirst();
         if(news!=null){
             callback.onNewsLoaded(news);
         }else {
@@ -64,7 +64,7 @@ public class NewsLocal implements NewsDataSource{
 
     @Override
     public void delete(final Berita newsParam) {
-        final Berita news = realm.where(Berita.class).equalTo("detailUrl",newsParam.getDetailUrl()).findFirst();
+        final Berita news = realm.where(Berita.class).equalTo("id",newsParam.getId()).findFirst();
 
         // Asynchronously update objects on a background thread
         realm.executeTransactionAsync(new Realm.Transaction() {

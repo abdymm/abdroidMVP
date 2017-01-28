@@ -13,9 +13,18 @@ import timber.log.Timber;
 public class AbdroidApplication extends Application{
     // Called when the application is starting, before any other application objects have been created.
     // Overriding this method is totally optional!
+    private static AbdroidApplication instance;
+    public static AbdroidApplication get() { return instance; }
+
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+        //instance
+        instance = this;
+
         // Required initialization logic here!
         Realm.init(this);
 

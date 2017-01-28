@@ -26,7 +26,6 @@ public class NewsRemote implements NewsDataSource {
         call.enqueue(new Callback<Beritas>() {
             @Override
             public void onResponse(Call<Beritas> call, Response<Beritas> response) {
-                Timber.d(response.body().getBerita().toString());
                 List<Berita> news = response.body().getBerita();
                 callback.onNewsLoaded(news);
             }

@@ -52,11 +52,11 @@ public class NewsPresenter implements NewsContract.Presenter{
         newsRemote.load(new NewsDataSource.LoadNewsCallback() {
             @Override
             public void onNewsLoaded(List<Berita> news) {
-                Timber.d(news.toString());
+                mNewsView.showNews(news);
             }
-
             @Override
             public void onDataNotAvailable() {
+                mNewsView.showNoNews();
                 Timber.e("No Data");
             }
         });

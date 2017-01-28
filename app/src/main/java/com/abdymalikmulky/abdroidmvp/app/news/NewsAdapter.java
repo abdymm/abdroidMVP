@@ -4,10 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.abdymalikmulky.abdroidmvp.AbdroidApplication;
 import com.abdymalikmulky.abdroidmvp.R;
 import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -33,6 +36,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         TextView sum;
         @BindView(R.id.news_tanggal)
         TextView date;
+        @BindView(R.id.news_thumb)
+        ImageView thumb;
 
         public ViewHolder(View v){
             super(v);
@@ -54,6 +59,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.title.setText(news.getJudul());
         holder.sum.setText(news.getIkhtisar());
         holder.date.setText(news.getTanggal());
+        Picasso.with(AbdroidApplication.get())
+                .load(news.getGambarThumb())
+                .into(holder.thumb);
     }
 
     @Override
