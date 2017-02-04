@@ -38,7 +38,6 @@ public class InterceptorUtils {
                         .maxStale(MAX_STALE_OFFLINE, TimeUnit.DAYS)
                         .maxAge(MAX_AGE_OFFLINE, TimeUnit.SECONDS)
                         .build();
-
                 request = request.newBuilder()
                         .cacheControl( cacheControl )
                         .build();
@@ -51,7 +50,6 @@ public class InterceptorUtils {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Response response = chain.proceed(chain.request());
-
             CacheControl cacheControl = new CacheControl.Builder()
                     .maxAge(MAX_AGE_ONLINE, TimeUnit.MINUTES)
                     .build();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsFragment extends Fragment implements NewsContract.View{
+public class NewsFragment extends Fragment implements NewsContract.View,SwipeRefreshLayout.OnRefreshListener{
     private static final String TAG = NewsFragment.class.getSimpleName();
 
     //Fragment depend
@@ -33,6 +34,9 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
 
     //component
+
+    @BindView(R.id.news_refresh)
+    SwipeRefreshLayout refresher;
     @BindView(R.id.news_loading)
     ProgressBar loading;
     @BindView(R.id.news_loading_text)
@@ -57,6 +61,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         if (getArguments() != null) {
             //arg
         }
+
     }
 
     @Override
@@ -67,7 +72,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         ButterKnife.bind(this, view);
 
         setUpRV(newsList);
-
+        setUpSwipeRefresh(refresher);
         return view;
     }
 
@@ -75,7 +80,17 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         rv.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(mLayoutManager);
+
+
     }
+    private void setUpSwipeRefresh(SwipeRefreshLayout sr){
+        sr.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        sr.setOnRefreshListener(this);
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -99,13 +114,15 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
     @Override
     public void showLoading(boolean show) {
+        if(!show){
+            refresher.setRefreshing(false);
+        }
         LoadingUiUtils.hideShowLoading(loading,loadingText,show);
     }
 
     @Override
     public void showNews(List<Berita> news) {
         showLoading(false);
-
         //show in list
         mAdapter = new NewsAdapter(news);
         newsList.setAdapter(mAdapter);
@@ -146,4 +163,10 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         super.onResume();
         mNewsPresenter.start();
     }
+
+    @Override
+    public void onRefresh() {
+        mNewsPresenter.loadNews();
+    }
+
 }
