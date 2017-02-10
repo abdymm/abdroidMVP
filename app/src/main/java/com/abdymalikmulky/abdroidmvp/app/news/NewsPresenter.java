@@ -16,6 +16,7 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 /**
  * Created by abdymalikmulky on 1/17/17.
  */
+
 public class NewsPresenter implements NewsContract.Presenter{
     private static final String TAG = NewsPresenter.class.getSimpleName();
 
@@ -32,24 +33,8 @@ public class NewsPresenter implements NewsContract.Presenter{
     }
 
     @Override
-    public void loadNews() {
-        /*new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                newsLocal.load(new NewsDataSource.LoadNewsCallback() {
-                    @Override
-                    public void onNewsLoaded(List<News> news) {
-                        mNewsView.showNews(news);
-                    }
-                    @Override
-                    public void onDataNotAvailable() {
-                        mNewsView.showNoNews();
-                    }
-                });
-
-            }
-        }, 1000);
-        */
-        newsRemote.load(new NewsDataSource.LoadNewsCallback() {
+    public void loadNews(int page) {
+        newsRemote.load(page,new NewsDataSource.LoadNewsCallback() {
             @Override
             public void onNewsLoaded(List<Berita> news) {
                 mNewsView.showNews(news);
@@ -57,18 +42,33 @@ public class NewsPresenter implements NewsContract.Presenter{
             @Override
             public void onDataNotAvailable() {
                 mNewsView.showNoNews();
-                Timber.e("No Data");
             }
         });
     }
 
     @Override
-    public void openTaskDetail() {
+    public void loadMore(int page) {
+        newsRemote.load(page, new NewsDataSource.LoadNewsCallback() {
+            @Override
+            public void onNewsLoaded(List<Berita> news) {
+                mNewsView.showLoadMoreNews(news);
+            }
 
+            @Override
+            public void onDataNotAvailable() {
+                mNewsView.showNoLoadMoreNews();
+            }
+        });
     }
 
     @Override
+    public void openNewsDetail(String newsId) {
+        mNewsView.showNewsDetail(newsId);
+    }
+
+
+    @Override
     public void start() {
-        loadNews();
+
     }
 }

@@ -19,15 +19,21 @@ public class NewsContract {
 
         void showNoNews();
 
-        void showNewsDetail(int newsId);
+        void showLoadMoreNews(List<Berita> news);
+
+        void showNoLoadMoreNews();
+
+        void showNewsDetail(String newsId);
 
     }
 
     interface Presenter extends BasePresenter{
 
-        void loadNews();
+        void loadNews(int page);
 
-        void openTaskDetail();
+        void loadMore(int page);
+
+        void openNewsDetail(String newsId);
 
     }
 

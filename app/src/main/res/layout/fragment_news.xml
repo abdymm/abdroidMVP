@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.news.NewsFragment">
+    tools:context=".app.news.NewsFragment"
+    android:background="@color/main_background">
 
 
     <ProgressBar
@@ -11,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/news_loading" />
+        android:id="@+id/news_loading"
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -20,19 +22,36 @@
         android:id="@+id/news_loading_text"
         android:gravity="center"
         android:layout_below="@+id/news_loading"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        />
 
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/news_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/news_loadmore"
+        android:layout_alignParentStart="true"
+        >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/news_list"
             android:scrollbars="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_delimiter"
+        android:layout_marginBottom="@dimen/margin_delimiter"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/news_loadmore"
+        android:visibility="gone"
+        />
+
+
 
 </RelativeLayout>

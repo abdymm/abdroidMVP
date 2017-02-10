@@ -13,5 +13,11 @@ public class EndpointUtils {
     public static final String ENDPOINT_LIST = "index/";
     public static final String ENDPOINT_DETAIL = "detail/?id={slug}";
 
+    //PARAMETER
+    public static final String PARAM_PAGE = "?page={pageCount}";
+
+    //KEY
+    public static final String KEY_ID = "id";
 
 }
+

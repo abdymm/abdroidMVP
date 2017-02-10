@@ -16,22 +16,23 @@ import android.widget.Toast;
 
 import com.abdymalikmulky.abdroidmvp.R;
 import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
+import com.abdymalikmulky.abdroidmvp.listener.OnVerticalScrollListener;
 import com.abdymalikmulky.abdroidmvp.util.LoadingUiUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsFragment extends Fragment implements NewsContract.View,SwipeRefreshLayout.OnRefreshListener{
+public class NewsFragment extends Fragment implements NewsContract.View,SwipeRefreshLayout.OnRefreshListener,NewsContract.Listener{
     private static final String TAG = NewsFragment.class.getSimpleName();
 
     //Fragment depend
     private OnFragmentInteractionListener mListener;
 
-
+    //news
     private NewsContract.Presenter mNewsPresenter;
-
 
     //component
 
@@ -39,13 +40,22 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
     SwipeRefreshLayout refresher;
     @BindView(R.id.news_loading)
     ProgressBar loading;
+    @BindView(R.id.news_loadmore)
+    ProgressBar loadingMore;
     @BindView(R.id.news_loading_text)
     TextView loadingText;
+
     //List
     @BindView(R.id.news_list)
     RecyclerView newsList;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private NewsAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+
+
+    private List<Berita> news;
+    int currentPage = 1;
+    boolean loadMoreState = true;
+
 
     public NewsFragment() {
     }
@@ -59,7 +69,7 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //arg
+
         }
 
     }
@@ -73,6 +83,13 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
 
         setUpRV(newsList);
         setUpSwipeRefresh(refresher);
+
+
+        news = new ArrayList<>();
+        mAdapter = new NewsAdapter(news,this);
+        newsList.setAdapter(mAdapter);
+
+
         return view;
     }
 
@@ -80,7 +97,16 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
         rv.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(mLayoutManager);
-
+        rv.setOnScrollListener(new OnVerticalScrollListener(currentPage) {
+            @Override
+            public void onLoadMore(int current_page) {
+                if(loadMoreState){
+                    loadMoreState = false;
+                    showLoadingMore(true);
+                    mNewsPresenter.loadMore(currentPage);
+                }
+            }
+        });
 
     }
     private void setUpSwipeRefresh(SwipeRefreshLayout sr){
@@ -90,7 +116,6 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
                 android.R.color.holo_red_light);
         sr.setOnRefreshListener(this);
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -120,12 +145,12 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
         LoadingUiUtils.hideShowLoading(loading,loadingText,show);
     }
 
-    @Override
-    public void showNews(List<Berita> news) {
-        showLoading(false);
-        //show in list
-        mAdapter = new NewsAdapter(news);
-        newsList.setAdapter(mAdapter);
+    public void showLoadingMore(boolean show){
+        if(!show){
+            loadingMore.setVisibility(View.GONE);
+        }else {
+            loadingMore.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -135,13 +160,39 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
     }
 
     @Override
-    public void showNewsDetail(int newsId) {
+    public void showNews(List<Berita> news) {
+        currentPage++;
+        showLoading(false);
+        mAdapter.replace(news);
+    }
 
+    @Override
+    public void showLoadMoreNews(List<Berita> news) {
+        currentPage++;
+        loadMoreState = true;
+        showLoadingMore(false);
+        mAdapter.add(news);
+    }
+
+    @Override
+    public void showNoLoadMoreNews() {
+        Toast.makeText(getActivity(), "NO LOAD MORE NEWS", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void showNewsDetail(String newsId) {
+        //show detail
     }
 
     @Override
     public void setPresenter(@NonNull NewsContract.Presenter presenter) {
         mNewsPresenter = presenter;
+    }
+
+    @Override
+    public void onNewsClick(Berita news) {
+        mNewsPresenter.openNewsDetail(news.getId());
     }
 
 
@@ -161,12 +212,14 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
     @Override
     public void onResume() {
         super.onResume();
-        mNewsPresenter.start();
+        mNewsPresenter.loadNews(currentPage);
     }
 
     @Override
     public void onRefresh() {
-        mNewsPresenter.loadNews();
+        currentPage=1;
+        mNewsPresenter.loadNews(currentPage);
     }
+
 
 }

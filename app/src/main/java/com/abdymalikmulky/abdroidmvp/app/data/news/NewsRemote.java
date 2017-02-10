@@ -20,9 +20,9 @@ public class NewsRemote implements NewsDataSource {
     private static NewsRemote INSTANCE;
 
     @Override
-    public void load(final LoadNewsCallback callback) {
+    public void load(int page, final LoadNewsCallback callback) {
         NewsApi api = ApiHelper.client().create(NewsApi.class);
-        Call<Beritas> call = api.getList();
+        Call<Beritas> call = api.getList(page);
         call.enqueue(new Callback<Beritas>() {
             @Override
             public void onResponse(Call<Beritas> call, Response<Beritas> response) {

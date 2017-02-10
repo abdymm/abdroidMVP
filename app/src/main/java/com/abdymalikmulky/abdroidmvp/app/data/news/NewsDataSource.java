@@ -8,6 +8,7 @@ import java.util.List;
  * Created by abdymalikmulky on 1/20/17.
  */
 
+
 public interface NewsDataSource {
 
     //OnAction Callback
@@ -21,7 +22,7 @@ public interface NewsDataSource {
     }
 
 
-    void load(LoadNewsCallback callback);
+    void load(int page,LoadNewsCallback callback);
 
     void get(Berita news,GetNewsCallback callback);
 

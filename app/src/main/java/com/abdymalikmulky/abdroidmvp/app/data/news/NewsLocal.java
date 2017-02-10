@@ -10,7 +10,6 @@ import io.realm.RealmResults;
 /**
  * Created by abdymalikmulky on 1/20/17.
  */
-
 public class NewsLocal implements NewsDataSource{
     private static final String TAG = NewsLocal.class.getSimpleName();
 
@@ -21,7 +20,7 @@ public class NewsLocal implements NewsDataSource{
 
 
     @Override
-    public void load(LoadNewsCallback callback) {
+    public void load(int page,LoadNewsCallback callback) {
         RealmResults<Berita> news = realm.where(Berita.class).findAll();
         if(!news.isEmpty()){
             callback.onNewsLoaded(news);
