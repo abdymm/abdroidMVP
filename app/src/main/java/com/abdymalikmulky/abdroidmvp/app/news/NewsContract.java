@@ -2,7 +2,7 @@ package com.abdymalikmulky.abdroidmvp.app.news;
 
 import com.abdymalikmulky.abdroidmvp.app.BasePresenter;
 import com.abdymalikmulky.abdroidmvp.app.BaseView;
-import com.abdymalikmulky.abdroidmvp.app.news.data.News;
+import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 
 import java.util.List;
 
@@ -15,7 +15,9 @@ public class NewsContract {
 
         void showLoading(boolean show);
 
-        void showNews(List<News> news);
+        void showNews(List<Berita> news);
+
+        void showNoNews();
 
         void showNewsDetail(int newsId);
 
@@ -30,6 +32,6 @@ public class NewsContract {
     }
 
     interface Listener {
-        void onNewsClick(News news);
+        void onNewsClick(Berita news);
     }
 }

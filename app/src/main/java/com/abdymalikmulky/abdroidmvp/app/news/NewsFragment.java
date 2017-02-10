@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdymalikmulky.abdroidmvp.R;
-import com.abdymalikmulky.abdroidmvp.app.news.data.News;
+import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 import com.abdymalikmulky.abdroidmvp.util.LoadingUiUtils;
 
 import java.util.List;
@@ -20,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsFragment extends Fragment implements NewsContract.View{
+public class NewsFragment extends Fragment implements NewsContract.View,SwipeRefreshLayout.OnRefreshListener{
     private static final String TAG = NewsFragment.class.getSimpleName();
 
     //Fragment depend
@@ -31,10 +34,18 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
 
     //component
+
+    @BindView(R.id.news_refresh)
+    SwipeRefreshLayout refresher;
     @BindView(R.id.news_loading)
     ProgressBar loading;
-    @BindView(R.id.news_data)
-    TextView data;
+    @BindView(R.id.news_loading_text)
+    TextView loadingText;
+    //List
+    @BindView(R.id.news_list)
+    RecyclerView newsList;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public NewsFragment() {
     }
@@ -50,6 +61,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         if (getArguments() != null) {
             //arg
         }
+
     }
 
     @Override
@@ -59,8 +71,24 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, view);
 
+        setUpRV(newsList);
+        setUpSwipeRefresh(refresher);
         return view;
+    }
 
+    private void setUpRV(RecyclerView rv){
+        rv.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(mLayoutManager);
+
+
+    }
+    private void setUpSwipeRefresh(SwipeRefreshLayout sr){
+        sr.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        sr.setOnRefreshListener(this);
     }
 
 
@@ -86,15 +114,24 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
     @Override
     public void showLoading(boolean show) {
-        LoadingUiUtils.hideShowLoading(loading,show);
+        if(!show){
+            refresher.setRefreshing(false);
+        }
+        LoadingUiUtils.hideShowLoading(loading,loadingText,show);
     }
 
     @Override
-    public void showNews(List<News> news) {
-        Toast.makeText(getActivity().getApplicationContext(), news.toString(), Toast.LENGTH_SHORT).show();
-        for (News newsData : news) {
-            data.append(newsData.getTitle()+" "+newsData.getSummary()+" "+newsData.getDate()+"\n");
-        }
+    public void showNews(List<Berita> news) {
+        showLoading(false);
+        //show in list
+        mAdapter = new NewsAdapter(news);
+        newsList.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void showNoNews() {
+        showLoading(false);
+        Toast.makeText(getActivity(), "No Berita", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -126,4 +163,10 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         super.onResume();
         mNewsPresenter.start();
     }
+
+    @Override
+    public void onRefresh() {
+        mNewsPresenter.loadNews();
+    }
+
 }
