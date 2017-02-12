@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath "io.realm:realm-gradle-plugin:2.2.2"
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -52,4 +53,6 @@ ext {
     realmVersion = '2.2.2'
 
     timberVersion = '4.5.1'
+
+    daggerVersion = '2.8'
 }
