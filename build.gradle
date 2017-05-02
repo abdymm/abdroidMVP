@@ -8,6 +8,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath "io.realm:realm-gradle-plugin:2.2.2"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -47,7 +48,7 @@ ext {
     retrofitVersion = '2.1.0'
     okHttpLoggingVersion = '3.3.1'
 
-    butterknifeVersion = '8.4.0'
+    butterknifeVersion = '8.5.1'
     glashfishAnnotVersion = '10.0-b28'
 
     realmVersion = '2.2.2'

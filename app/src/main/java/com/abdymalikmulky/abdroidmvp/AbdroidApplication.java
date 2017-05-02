@@ -3,6 +3,8 @@ package com.abdymalikmulky.abdroidmvp;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import com.abdymalikmulky.abdroidmvp.network.NetworkModule;
+
 import io.realm.Realm;
 import timber.log.Timber;
 
@@ -11,9 +13,11 @@ import timber.log.Timber;
  */
 
 public class AbdroidApplication extends Application{
-    // Called when the application is starting, before any other application objects have been created.
-    // Overriding this method is totally optional!
-    private static AbdroidApplication instance;
+
+    AppComponent appComponent;
+
+    private static
+    AbdroidApplication instance;
 
     public static AbdroidApplication get() { return instance; }
 
@@ -24,6 +28,12 @@ public class AbdroidApplication extends Application{
         //instance
         instance = this;
 
+        appComponent = DaggerAppComponent
+                .builder()
+                .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
+                .build();
+
         // Required initialization logic here!
         Realm.init(this);
 
@@ -31,7 +41,10 @@ public class AbdroidApplication extends Application{
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+    }
 
+    public AppComponent getAppComponent(){
+        return appComponent;
     }
 
 

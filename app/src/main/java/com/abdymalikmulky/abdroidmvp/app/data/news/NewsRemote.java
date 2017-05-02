@@ -2,13 +2,13 @@ package com.abdymalikmulky.abdroidmvp.app.data.news;
 
 import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Berita;
 import com.abdymalikmulky.abdroidmvp.app.data.news.pojo.Beritas;
-import com.abdymalikmulky.abdroidmvp.helper.ApiHelper;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 import timber.log.Timber;
 
 /**
@@ -16,12 +16,16 @@ import timber.log.Timber;
  */
 
 public class NewsRemote implements NewsDataSource {
+    private Retrofit retrofit;
 
-    private static NewsRemote INSTANCE;
+    public NewsRemote(Retrofit retrofit) {
+        this.retrofit = retrofit;
+    }
 
     @Override
     public void load(int page, final LoadNewsCallback callback) {
-        NewsApi api = ApiHelper.client().create(NewsApi.class);
+
+        NewsApi api = retrofit.create(NewsApi.class);
         Call<Beritas> call = api.getList(page);
         call.enqueue(new Callback<Beritas>() {
             @Override

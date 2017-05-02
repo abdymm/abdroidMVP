@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 public class NewsFragment extends Fragment implements NewsContract.View,SwipeRefreshLayout.OnRefreshListener,NewsContract.Listener{
     private static final String TAG = NewsFragment.class.getSimpleName();
 
+
     //Fragment depend
     private OnFragmentInteractionListener mListener;
 
@@ -48,6 +49,7 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
     //List
     @BindView(R.id.news_list)
     RecyclerView newsList;
+
     private NewsAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
@@ -69,9 +71,7 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
         }
-
     }
 
     @Override
@@ -80,6 +80,7 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, view);
+
 
         setUpRV(newsList);
         setUpSwipeRefresh(refresher);
@@ -95,6 +96,7 @@ public class NewsFragment extends Fragment implements NewsContract.View,SwipeRef
 
     private void setUpRV(RecyclerView rv){
         rv.setHasFixedSize(true);
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(mLayoutManager);
         rv.setOnScrollListener(new OnVerticalScrollListener(currentPage) {

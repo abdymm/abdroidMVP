@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import timber.log.Timber;
+import retrofit2.Retrofit;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
@@ -20,14 +20,14 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 public class NewsPresenter implements NewsContract.Presenter{
     private static final String TAG = NewsPresenter.class.getSimpleName();
 
-
     NewsContract.View mNewsView;
     NewsLocal newsLocal;
     NewsRemote newsRemote;
 
 
-    public NewsPresenter(@NotNull NewsContract.View newsView) {
-        newsRemote = new NewsRemote();
+
+    public NewsPresenter(@NotNull NewsContract.View newsView, Retrofit retrofit) {
+        newsRemote = new NewsRemote(retrofit);
         mNewsView = checkNotNull(newsView);
         mNewsView.setPresenter(this);
     }
